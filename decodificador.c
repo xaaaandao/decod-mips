@@ -44,7 +44,7 @@ void bin_prnt_byte(int x) {
   
 	for (i = 0; i < 32; i++) {
 		if ((x & 0x80000000) != 0) {
-		// fprintf(stdout, "1");
+			// fprintf(stdout, "1");
 			n = snprintf(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%s", "1");
 		}
 		else {
