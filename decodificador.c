@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 #include "debug.h"
 
@@ -44,15 +45,15 @@ void bin_prnt_byte(int x) {
 	for (i = 0; i < 32; i++) {
 		if ((x & 0x80000000) != 0) {
 		// fprintf(stdout, "1");
-			n = sprintf (buffer, "%s%s", buffer, "1");
+			n = snprintf(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%s", "1");
 		}
 		else {
 			// fprintf(stdout, "0");
-			n = sprintf (buffer, "%s%s", buffer, "0");
+			n = snprintf(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%s", "0");
 		}
 		if ((i % 4 == 3) && i < 31) {
 			// fprintf(stdout, " "); /* insert a space between nybbles */
-			n = sprintf (buffer, "%s%s", buffer, " ");
+			n = snprintf(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%s", " ");
 		}
 		x = x << 1;
 	}
@@ -177,7 +178,7 @@ void decodificar(unsigned int ir) {
 		
 		case 2:	{ // 000010 -> j address (26), J-Type
 			fprintf(stdout, "j ");
-			fprintf(stdout, "0x%0.8X\n", getAddress(ir));
+			fprintf(stdout, "0x%.8X\n", getAddress(ir));
 			break;
 		}
 
@@ -187,7 +188,7 @@ void decodificar(unsigned int ir) {
 			fprintf(stdout, "beq ");
 			fprintf(stdout, "%s, ", registerName[getRs(ir)]);
 			fprintf(stdout, "%s, ", registerName[getRt(ir)]);
-			fprintf(stdout, "%#0.4x\n", getImmediate(ir));
+			fprintf(stdout, "%#.4x\n", getImmediate(ir));
 			break;
 		}
 		
